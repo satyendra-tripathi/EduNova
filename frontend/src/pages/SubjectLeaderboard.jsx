@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const SubjectLeaderboard = () => {
   const [ranking, setRanking] = useState({});
@@ -8,7 +9,7 @@ const SubjectLeaderboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/v1/leaderboard/subject/ranking", {
+      .get(`${API_URL}/leaderboard/subject/ranking`, {
         withCredentials: true,
       })
       .then((res) => {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Dashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -11,7 +12,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/api/v1/dashboard", {
+        const res = await axios.get(`${API_URL}/dashboard`, {
           withCredentials: true, // ✅ send cookie
         });
 

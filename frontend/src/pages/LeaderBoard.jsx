@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const LeaderBoard = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ const LeaderBoard = () => {
     const fetchTopStudents = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/api/v1/leaderboard/top",
+          `${API_URL}/leaderboard/top`,
           { withCredentials: true }
         );
 

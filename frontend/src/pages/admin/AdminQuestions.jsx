@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash, FaEdit } from "react-icons/fa";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminQuestions = () => {
-  const API_BASE = "http://localhost:4000/api/v1/admin";
+  const API_BASE = `${API_URL}/admin`;
 
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const AdminQuestions = () => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${API_BASE}/questions?keyword=${keyword}&page=${page}`,
+        `${API_URL}/questions?keyword=${keyword}&page=${page}`,
         { withCredentials: true }
       );
 
@@ -40,7 +41,7 @@ const AdminQuestions = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`${API_BASE}/questions/${deleteId}`, {
+      await axios.delete(`${API_URL}/questions/${deleteId}`, {
         withCredentials: true,
       });
       setDeleteId(null);
@@ -53,7 +54,7 @@ const AdminQuestions = () => {
   const confirmEdit = async () => {
     try {
       await axios.put(
-        `${API_BASE}/questions/${editData._id}`,
+        `${API_URL}/questions/${editData._id}`,
         { question: newQuestion },
         { withCredentials: true }
       );

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 /* ---------------- AI CHAT ---------------- */
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const AIChatSection = () => {
   const [inputText, setInputText] = useState("");
@@ -23,7 +24,7 @@ export const AIChatSection = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/chat/send",
+        `${API_URL}/chat/send`,
         { inputText: tempText, action: "explain" },
         { withCredentials: true }
       );

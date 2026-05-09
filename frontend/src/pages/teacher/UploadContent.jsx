@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const UploadContent = () => {
   const [subjects, setSubjects] = useState([]);
@@ -18,7 +19,7 @@ const UploadContent = () => {
     const fetchSubjects = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/api/v1/forum/subjects",
+          `${API_URL}/forum/subjects`,
           { withCredentials: true }
         );
         setSubjects(res.data.subjects || []);
@@ -47,7 +48,7 @@ const UploadContent = () => {
       formData.append("file", form.file);
 
       await axios.post(
-        "http://localhost:4000/api/v1/forum/content/upload",
+        `${API_URL}/forum/content/upload`,
         formData,
         { withCredentials: true }
       );

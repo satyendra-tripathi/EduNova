@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
@@ -10,7 +11,7 @@ const Subjects = () => {
   const fetchSubjects = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/forum/subjects",
+        `${API_URL}/forum/subjects`,
         { withCredentials: true }
       );
       setSubjects(data.subjects || []);
@@ -30,7 +31,7 @@ const Subjects = () => {
 
     try {
       await axios.post(
-        "http://localhost:4000/api/v1/forum/subject/create",
+        `${API_URL}/forum/subject/create`,
         { name },
         { withCredentials: true }
       );
@@ -46,7 +47,7 @@ const Subjects = () => {
   const deleteSubject = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:4000/api/v1/forum/subject/${id}`,
+        `${API_URL}/forum/subject/${id}`,
         { withCredentials: true }
       );
 

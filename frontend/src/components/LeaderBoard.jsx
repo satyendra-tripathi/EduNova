@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { useSelector } from "react-redux";
+const API_URL = import.meta.env.VITE_API_URL;
 
 ChartJS.register(
   CategoryScale,
@@ -36,22 +37,22 @@ const Leaderboard = () => {
     const fetchData = async () => {
       try {
         const topRes = await axios.get(
-          "http://localhost:4000/api/v1/leaderboard/top"
+          `${API_URL}/leaderboard/top`
         );
         setTopStudents(topRes.data.topStudents || []);
 
         const dailyRes = await axios.get(
-          `http://localhost:4000/api/v1/leaderboard/student/${studentId}/daily`
+          `${API_URL}/leaderboard/student/${studentId}/daily`
         );
         setDailyProgress(dailyRes.data.dailyProgress || []);
 
         const subjectRes = await axios.get(
-          `http://localhost:4000/api/v1/leaderboard/subject/ranking`
+          `${API_URL}/leaderboard/subject/ranking`
         );
         setSubjectStats(subjectRes.data.subjectRanking || {});
 
         const weeklyRes = await axios.get(
-          `http://localhost:4000/api/v1/leaderboard/student/${studentId}/weekly-subjects`
+          `${API_URL}/leaderboard/student/${studentId}/weekly-subjects`
         );
         setWeeklyStats(weeklyRes.data.weeklySubjectStats || {});
       } catch (error) {

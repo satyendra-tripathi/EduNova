@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const StudentSubjectContent = () => {
   const [grouped, setGrouped] = useState([]);
@@ -8,7 +9,7 @@ const StudentSubjectContent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/v1/forum/student/playlist", {
+      .get(`${API_URL}/forum/student/playlist`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -116,7 +117,7 @@ const StudentSubjectContent = () => {
                       />
 
                       <a
-                        href={`http://localhost:4000/api/v1/forum/content/download/${item._id}`}
+                        href={`${API_URL}/forum/content/download/${item._id}`}
                         className="text-green-600 underline mt-2 block"
                       >
                         Download PDF
@@ -155,7 +156,7 @@ const StudentSubjectContent = () => {
                       </video>
 
                       <a
-                        href={`http://localhost:4000/api/v1/forum/content/download/${item._id}`}
+                        href={`${API_URL}/forum/content/download/${item._id}`}
                         className="text-green-600 underline mt-2 block"
                       >
                         Download Video

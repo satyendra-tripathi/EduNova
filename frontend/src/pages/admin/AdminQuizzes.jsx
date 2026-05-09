@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminQuizzes = () => {
   const [title, setTitle] = useState("");
@@ -89,7 +90,7 @@ const AdminQuizzes = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/adminquiz/create-quiz",
+        `${API_URL}/adminquiz/create-quiz`,
         { title, subject, duration: Number(duration), questions },
         { withCredentials: true }
       );

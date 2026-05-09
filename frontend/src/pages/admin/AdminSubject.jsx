@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
 const AdminSubject = () => {
-  const API_BASE = "http://localhost:4000/api/v1/admin";
+  const API_BASE = `${API_URL}/admin`;
 
   const [subjects, setSubjects] = useState([]);
   const [name, setName] = useState("");

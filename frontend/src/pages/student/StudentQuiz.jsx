@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const StudentQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -17,7 +18,7 @@ const StudentQuiz = () => {
   const fetchQuizzes = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:4000/api/v1/adminquiz/student-quizzes",
+        `${API_URL}/adminquiz/student-quizzes`,
         { withCredentials: true }
       );
       if (res.data.success) setQuizzes(res.data.quizzes);
@@ -35,7 +36,7 @@ const StudentQuiz = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/adminquiz/start-student-quiz",
+        `${API_URL}/adminquiz/start-student-quiz`,
         { quizId: selectedQuiz._id },
         { withCredentials: true }
       );
@@ -56,7 +57,7 @@ const StudentQuiz = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/api/v1/adminquiz/submit-question",
+        `${API_URL}/adminquiz/submit-question`,
         {
           attemptId,
           questionId: question._id,

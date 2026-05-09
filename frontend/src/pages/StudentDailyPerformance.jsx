@@ -12,6 +12,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+const API_URL = import.meta.env.VITE_API_URL;
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +34,7 @@ const StudentDailyPerformance = () => {
     const fetchDailyProgress = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/api/v1/leaderboard/student/${id}/daily`,
+          `${API_URL}/leaderboard/student/${id}/daily`,
           { withCredentials: true }
         );
 

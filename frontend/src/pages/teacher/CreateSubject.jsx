@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreateSubject = () => {
   const [name, setName] = useState("");
@@ -10,7 +11,7 @@ const CreateSubject = () => {
 
     try {
       await axios.post(
-        "http://localhost:4000/api/v1/forum/subject/create",
+        `${API_URL}/forum/subject/create`,
         { name },
         { withCredentials: true }
       );

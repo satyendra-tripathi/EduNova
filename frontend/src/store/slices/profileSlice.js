@@ -2,6 +2,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   loading: false,
@@ -67,7 +68,7 @@ export const updateProfile = (formData) => async (dispatch) => {
   dispatch(profileSlice.actions.UpdateProfileRequest());
   try {
     const { data } = await axios.put(
-      "http://localhost:4000/api/v1/user/profile",
+      `${API_URL}/user/profile`,
       formData,
       {
         headers: { "Content-Type": "multipart/form-data" },
@@ -97,7 +98,7 @@ export const verifyEmail = (token) => async (dispatch) => {
   dispatch(profileSlice.actions.VerifyEmailRequest());
   try {
     const { data } = await axios.get(
-      `http://localhost:4000/api/v1/user/verify-email/${token}`,
+      `${API_URL}/user/verify-email/${token}`,
       { withCredentials: true }
     );
 

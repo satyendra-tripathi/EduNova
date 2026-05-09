@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const MySubjects = () => {
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
     const fetchSubjects = async () => {
-      const { data } = await axios.get("http://localhost:4000/api/v1/forum/subjects", {
+      const { data } = await axios.get(`${API_URL}/forum/subjects`, {
         withCredentials: true,
       });
       setSubjects(data.subjects);

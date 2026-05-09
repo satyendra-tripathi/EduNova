@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const StudentSubjectStats = () => {
   const { user } = useSelector((state) => state.auth);
@@ -15,7 +16,7 @@ const StudentSubjectStats = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:4000/api/v1/leaderboard/subject/ranking",
+          `${API_URL}/leaderboard/subject/ranking`,
           { withCredentials: true }
         );
 

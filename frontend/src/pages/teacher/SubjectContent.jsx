@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const SubjectContent = () => {
   const [grouped, setGrouped] = useState([]);
@@ -11,7 +12,7 @@ const SubjectContent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/api/v1/forum/content/playlist", {
+      .get(`${API_URL}/forum/content/playlist`, {
         withCredentials: true,
       })
       .then((res) => setGrouped(res.data.grouped || []))
@@ -26,7 +27,7 @@ const SubjectContent = () => {
   const confirmDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:4000/api/v1/forum/content/${deleteId}`,
+        `${API_URL}/forum/content/${deleteId}`,
         { withCredentials: true }
       );
 
@@ -125,7 +126,7 @@ const SubjectContent = () => {
                         />
 
                         <a
-                          href={`http://localhost:4000/api/v1/forum/content/download/${item._id}`}
+                          href={`${API_URL}/forum/content/download/${item._id}`}
                           className="block text-green-600 underline mt-2 text-sm"
                         >
                           Download PDF
@@ -141,7 +142,7 @@ const SubjectContent = () => {
                         </video>
 
                         <a
-                          href={`http://localhost:4000/api/v1/forum/content/download/${item._id}`}
+                          href={`${API_URL}/forum/content/download/${item._id}`}
                           className="block text-green-600 underline mt-2 text-sm"
                         >
                           Download Video

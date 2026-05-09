@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle, XCircle, Loader2, ArrowRight } from "lucide-react";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function VerifyEmailPage() {
   const { token } = useParams();
@@ -12,7 +13,7 @@ function VerifyEmailPage() {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:4000/api/v1/user/verify-email/${token}`);
+        const { data } = await axios.get(`${API_URL}/user/verify-email/${token}`);
         if (data.success) {
           setStatus("success");
           setMessage(data.message);

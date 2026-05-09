@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrash } from "react-icons/fa";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -8,7 +9,7 @@ const AdminUsers = () => {
   const [deleteId, setDeleteId] = useState(null);
   const [blockId, setBlockId] = useState(null);
 
-  const API_BASE = "http://localhost:4000/api/v1/admin";
+  const API_BASE = `${API_URL}/admin`;
 
   const fetchUsers = async () => {
     try {

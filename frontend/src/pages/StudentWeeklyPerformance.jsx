@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const StudentWeeklyPerformance = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const StudentWeeklyPerformance = () => {
     const fetchWeeklyData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:4000/api/v1/leaderboard/student/${id}/weekly-subjects`,
+          `${API_URL}/leaderboard/student/${id}/weekly-subjects`,
           { withCredentials: true }
         );
 
