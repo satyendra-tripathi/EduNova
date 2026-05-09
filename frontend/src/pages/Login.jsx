@@ -3,27 +3,52 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, googleLogin } from "../store/slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { authSlice } from "../store/slices/authSlice";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [secretKey, setSecretKey] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-  email,
-  password,
-  role: role || "student",
-  secretKey: role === "admin" || role === "teacher" ? secretKey : undefined,
-};
-    dispatch(login(data));
+    setLoading(true);
+    setError(null);
+    try {
+      const payload = {
+        email,
+        password,
+        role: role || "student",
+        secretKey: role === "admin" || role === "teacher" ? secretKey : undefined,
+      };
+
+      const { data: res } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        payload,
+        { withCredentials: true }
+      );
+
+      dispatch({ type: "auth/LoginSuccess", payload: res.user });
+      localStorage.setItem("user", JSON.stringify(res.user));
+      toast.success("Logged in successfully");
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      setError(message);
+      toast.error(message);
+      dispatch({ type: "auth/LoginFailed", payload: message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -34,9 +59,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#dfe6da] px-4">
-
       <div className="bg-white shadow-xl rounded-3xl p-10 w-full max-w-md border-none">
-
         {/* Title */}
         <h2 className="text-3xl font-bold text-center mb-2 text-[#4f6f52]">
           Welcome Back
@@ -48,7 +71,6 @@ function Login() {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
-
           <input
             type="email"
             placeholder="Enter your email"
@@ -78,21 +100,20 @@ function Login() {
             <option value="admin">Admin</option>
           </select>
 
-
           {(role === "admin" || role === "teacher") && (
-  <input
-    type="password"
-    placeholder={
-      role === "admin"
-        ? "Enter Admin Secret Code"
-        : "Enter Teacher Secret Code"
-    }
-    value={secretKey}
-    onChange={(e) => setSecretKey(e.target.value)}
-    className="w-full px-5 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9caf88] transition"
-    required
-  />
-)}
+            <input
+              type="password"
+              placeholder={
+                role === "admin"
+                  ? "Enter Admin Secret Code"
+                  : "Enter Teacher Secret Code"
+              }
+              value={secretKey}
+              onChange={(e) => setSecretKey(e.target.value)}
+              className="w-full px-5 py-3 border border-gray-300 rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#9caf88] transition"
+              required
+            />
+          )}
 
           {/* Button */}
           <button
@@ -106,7 +127,6 @@ function Login() {
           {error && (
             <p className="text-red-500 text-center text-sm">{error}</p>
           )}
-
         </form>
 
         {/* Google Login */}
@@ -117,8 +137,8 @@ function Login() {
             }}
             onError={() => {
               console.log("Login Failed");
+              toast.error("Google login failed");
             }}
-            useOneTap
             theme="outline"
             shape="circle"
             text="continue_with"
@@ -135,7 +155,6 @@ function Login() {
             Register
           </Link>
         </p>
-
       </div>
     </div>
   );

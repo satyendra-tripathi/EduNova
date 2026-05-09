@@ -3,34 +3,54 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, googleLogin } from "../store/slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [secretKey, setSecretKey] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-    const data = {
-      name,
-      email,
-      password,
-      role: role || "student",
-      secretKey:
-        role === "admin" || role === "teacher" ? secretKey : undefined,
-    };
+    try {
+      const data = {
+        name,
+        email,
+        password,
+        role: role || "student",
+        secretKey: role === "admin" || role === "teacher" ? secretKey : undefined,
+      };
 
-    dispatch(register(data));
+      const { data: res } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/register`,
+        data,
+        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+      );
+
+      dispatch({ type: "auth/RegisterSuccess", payload: res.user });
+      localStorage.setItem("user", JSON.stringify(res.user));
+      toast.success("Registered successfully");
+    } catch (err) {
+      const message = err.response?.data?.message || err.message;
+      setError(message);
+      toast.error(message);
+      dispatch({ type: "auth/RegisterFailed", payload: message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -41,9 +61,7 @@ function Register() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#dfe6da] px-4 py-6">
-
       <div className="bg-white shadow-xl rounded-2xl sm:rounded-3xl p-6 sm:p-10 w-full max-w-md">
-
         {/* TITLE */}
         <h2 className="text-2xl sm:text-3xl font-bold text-center text-[#4f6f52]">
           Create Account
@@ -55,7 +73,6 @@ function Register() {
 
         {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
-
           <input
             type="text"
             placeholder="Full Name"
@@ -119,7 +136,6 @@ function Register() {
           >
             {loading ? "Creating..." : "Register"}
           </button>
-
         </form>
 
         {/* ERROR */}
@@ -147,8 +163,8 @@ function Register() {
             }}
             onError={() => {
               console.log("Login Failed");
+              toast.error("Google registration failed");
             }}
-            useOneTap
             theme="outline"
             shape="circle"
             text="continue_with"
@@ -165,7 +181,6 @@ function Register() {
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );

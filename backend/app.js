@@ -1,5 +1,5 @@
 import express from "express";
-
+import helmet from "helmet";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -24,8 +24,14 @@ import notificationRoutes from "./routes/notificationRoutes.js"
 export const app = express();
 
 app.use(
+  helmet({
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
+  })
+);
+
+app.use(
   cors({
-    origin:  true,
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE","OPTIONS","PATCH"],
     credentials: true,
   })
