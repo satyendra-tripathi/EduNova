@@ -29,7 +29,7 @@ import About from "./pages/About.jsx";
 
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
-import AdminSubject from "./pages/admin/adminSubject.jsx";
+import AdminSubject from "./pages/admin/AdminSubject.jsx";
 import AdminLayout from "./pages/admin/components/AdminLayout.jsx";
 import AdminQuestions from "./pages/admin/AdminQuestions.jsx";
 import AdminAnswers from "./pages/admin/AdminAnswers.jsx";
