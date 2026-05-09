@@ -1,0 +1,36 @@
+{
+  "name": "edunova-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google/genai": "^1.49.0",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.12.2",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.1",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.5.1",
+    "google-auth-library": "^10.6.2",
+    "groq-sdk": "^1.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.1",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.7",
+    "openai": "^5.23.1",
+    "socket.io": "^4.8.1",
+    "validator": "^13.15.15"
+  }
+}
