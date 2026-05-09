@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 // ---- Load user from localStorage on startup ----
-const savedUser = localStorage.getItem("user")
+const savedUser = (localStorage.getItem("user") && localStorage.getItem("user") !== "undefined")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
 

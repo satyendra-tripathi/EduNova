@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
   loading: false,
-  user: localStorage.getItem("user")
+  user: (localStorage.getItem("user") && localStorage.getItem("user") !== "undefined")
     ? JSON.parse(localStorage.getItem("user"))
     : {},
   message: null,
