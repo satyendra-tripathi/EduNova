@@ -301,7 +301,7 @@ export const googleAuth = catchAsyncError(async (req, res, next) => {
   const payload = ticket.getPayload();
   const { sub: googleId, email, name, picture: avatarUrl } = payload;
 
-  let user = await User.findOne({ email });
+  let user = await User.findOne({ email }).select("+password");
 
   if (user) {
     if (!user.googleId) user.googleId = googleId;
