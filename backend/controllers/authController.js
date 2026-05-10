@@ -14,12 +14,19 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const sendToken = (user, statusCode, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
+  // res.cookie("token", token, {
+  //   httpOnly: true,
+  //   secure: false, // dev MUST false
+  //   sameSite: "lax",
+  //   maxAge: 7 * 24 * 60 * 60 * 1000,
+  // });
+
   res.cookie("token", token, {
-    httpOnly: true,
-    secure: false, // dev MUST false
-    sameSite: "lax",
-    maxAge: 7 * 24 * 60 * 60 * 1000,
-  });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
 
   res.status(statusCode).json({
     success: true,
