@@ -30,11 +30,20 @@ app.use(
 );
 
 app.use(
+  // cors({
+  //   origin: true,
+  //   methods: ["GET", "POST", "PUT", "DELETE","OPTIONS","PATCH"],
+  //   credentials: true,
+  // })
+
   cors({
-    origin: true,
-    methods: ["GET", "POST", "PUT", "DELETE","OPTIONS","PATCH"],
-    credentials: true,
-  })
+  origin: [
+    "http://localhost:5173",
+    "https://edunova-frontend-odky.onrender.com",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  credentials: true,
+})
 );
 app.use(cookieParser());
 app.use(express.json());
